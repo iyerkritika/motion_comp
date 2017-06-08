@@ -1,0 +1,29 @@
+<!-- one psm1 + one psm2  -->
+<launch>
+
+ 	<arg name="model" default="$(find dvrk_model)/model/both_psms.urdf.xacro" />
+  <arg name="gui" default="true" />
+  <arg name="rate" default="20" />
+
+  <param name="robot_description"
+         command="rosrun xacro xacro.py $(arg model)"/>
+  <param name="use_gui" value="$(arg gui)"/>
+  <param name="rate" value="$(arg rate)"/>
+ 
+  <!-- joint state publisher -->
+  <node name="joint_state_publisher"
+        pkg="joint_state_publisher"
+        type="joint_state_publisher"/>
+
+  <!-- robot state publisher -->
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="state_publisher" />
+
+
+  <!-- rviz node -->
+  <node name="rviz" pkg="rviz" type="rviz"/>
+  
+</launch>
+
+

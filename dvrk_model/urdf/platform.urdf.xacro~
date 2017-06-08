@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<robot name="moving_pf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="pf" params="parent_link xyz rpy">
+    <!-- Prismatic joint -->
+    <joint name="prismatic_joint" type="prismatic">
+      <parent link="${parent_link}"/>
+      <child link="platform"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+      <limit lower="-0.12" upper="0.12" velocity="50" effort="1000"/>
+    </joint>
+
+
+    <link name="platform">
+
+      <inertial>
+      	<mass value="0.01"/>
+      	<origin rpy="0 1.57 0" xyz="0 0 0.89949"/>
+      	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 1.57 0" xyz="0 0 0"/>
+        <geometry>
+	  <box size="0.2 0.2 0.05"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 1.57 0" xyz="0 0 0"/>
+        <geometry>
+	  <box size="0.2 0.2 0.05"/>  
+        </geometry>
+      </collision>
+    </link>
+
+    <transmission name="prism_tran">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="prismatic_joint">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="pf_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+  </xacro:macro>
+  
+</robot>

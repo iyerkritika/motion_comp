@@ -1,0 +1,91 @@
+<!--Test-->
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find dvrk_gazebo)/worlds/dvrk.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="verbose" value="true" />
+  </include>
+
+    <!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find dvrk_model)/model/mtm_right.urdf.xacro'" /> -->
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+
+ <!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find dvrk_model)/urdf/psm_launch.urdf.xacro'" /> -->
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <group ns="mtm">
+
+    <rosparam file="$(find dvrk_gazebo_control)/config/dvrk_mtm_controller.yaml" command="load"
+                ns="/mtm"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find dvrk_model)/model/mtm_right.urdf.xacro'" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+  	 args="-urdf -model dvrk_mtm -param robot_description"/>
+
+    <include file="$(find dvrk_gazebo_control)/launch/dvrk_mtm_control.launch"/>
+    <!-- <node name="robot_state_publisher2" pkg="robot_state_publisher" type="robot_state_publisher"
+    	respawn="false" output="screen">
+        <remap from="/joint_states" to="/mtm/joint_states" />
+        <remap from="robot_description" to="/mtm/robot_description" />
+      </node> -->
+      <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/mtm" args="joint_state_controller
+                   joint_1_position_controller
+                   joint_2_position_controller
+                   joint_3_position_controller
+                   joint_4_position_controller
+                   joint_5_position_controller
+                   joint_6_position_controller
+                   joint_7_position_controller">
+        </node> -->
+
+  </group>
+
+
+<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find dvrk_model)/urdf/psm_launch.urdf.xacro'" /> -->
+ <group ns="dvrk_psm">
+  <!-- <rosparam file="$(find dvrk_gazebo_control)/config/dvrk_psm_controller.yaml" command="load"
+             ns="/dvrk_psm" /> -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find dvrk_model)/urdf/psm_launch.urdf.xacro'" />
+
+  <node name="urdf_spawner2" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+  args="-urdf -model dvrk_psm -param robot_description"/>
+
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+  	respawn="false" output="screen">
+      <remap from="/joint_states" to="/dvrk_psm/joint_states" />
+      <remap from="robot_description" to="/dvrk_psm/robot_description" />
+    </node> -->
+
+    <!-- <node name="controller_spawner2" pkg="controller_manager" type="spawner" respawn="false"
+      output="screen" ns="/dvrk_psm" args="joint_state_controller
+                 joint_1_position_controller
+                 joint_2_position_controller
+                 joint_3_position_controller
+                 joint_4_position_controller
+                 joint_5_position_controller
+                 joint_6_position_controller
+                 joint_7_position_controller
+                 joint_8_position_controller
+                 joint_9_position_controller
+                 joint_10_position_controller">
+
+      </node> -->
+
+  <include file="$(find dvrk_gazebo_control)/launch/dvrk_psm_control.launch"/>
+ </group>
+
+
+
+</launch>

@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<robot name="master" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Macros -->
+  <xacro:include filename="$(find dvrk_model)/model/mtm.urdf.xacro"/>
+
+  <link name="world"/>
+  <xacro:mtm 
+      prefix="right_"
+      parent_link="world"
+      xyz="1.0 0.0 1.0" rpy="0.0 0.0 0.0"/>
+
+  <!-- Macros -->
+ <xacro:include filename="$(find dvrk_model)/urdf/psm_inertia.urdf.xacro"/>
+
+  <!--<link name="world"/>-->
+  <xacro:psm 
+      prefix="one_"
+      parent_link="world"
+      xyz="-1 0.0 1" rpy="0.0 0.0 3.1415926"/>-->
+ 
+
+ <xacro:include filename="$(find dvrk_model)/urdf/platform.urdf.xacro"/>
+  
+  <xacro:pf
+      parent_link="world"
+      xyz="-1 0.0 0.89949" rpy="0 -1.570796 0.0"/>
+
+  <gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+  <!--<robotNamespace>/dvrk_psm</robotNamespace>
+  <robotParam>/dvrk_psm/robot_description</robotParam>-->
+  <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+  </plugin>
+  </gazebo>
+
+</robot>
+

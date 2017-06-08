@@ -1,0 +1,50 @@
+digraph G {
+node [shape=box];
+"world" [label="world"];
+"one_remote_center_link" [label="one_remote_center_link"];
+"one_psm_base_link" [label="one_psm_base_link"];
+"one_outer_yaw_link" [label="one_outer_yaw_link"];
+"one_outer_pitch_back_link" [label="one_outer_pitch_back_link"];
+"one_outer_pitch_bottom_link" [label="one_outer_pitch_bottom_link"];
+"one_outer_insertion_link" [label="one_outer_insertion_link"];
+"one_tool_main_link" [label="one_tool_main_link"];
+"one_tool_wrist_link" [label="one_tool_wrist_link"];
+"one_tool_wrist_shaft_link" [label="one_tool_wrist_shaft_link"];
+"one_tool_wrist_sca_link" [label="one_tool_wrist_sca_link"];
+"one_tool_wrist_sca_shaft_link" [label="one_tool_wrist_sca_shaft_link"];
+"one_tool_wrist_sca_ee_link_1" [label="one_tool_wrist_sca_ee_link_1"];
+"one_tool_wrist_sca_ee_link_2" [label="one_tool_wrist_sca_ee_link_2"];
+"one_outer_pitch_top_link" [label="one_outer_pitch_top_link"];
+"one_outer_pitch_front_link" [label="one_outer_pitch_front_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"world" -> "one_fixed_joint" [label="xyz: -1 0 1 \nrpy: 0 -0 3.14159"]
+"one_fixed_joint" -> "one_remote_center_link"
+"one_remote_center_link" -> "one_rc_fixed_joint" [label="xyz: 0 -0.369 0 \nrpy: 0 -0 0"]
+"one_rc_fixed_joint" -> "one_psm_base_link"
+"one_psm_base_link" -> "one_outer_yaw_joint" [label="xyz: 0 0 0 \nrpy: -1.57079 -1.57079 3.14159"]
+"one_outer_yaw_joint" -> "one_outer_yaw_link"
+"one_outer_yaw_link" -> "one_outer_pitch_joint_1" [label="xyz: 0 0.0295 0.1495 \nrpy: 1.57079 -1.57079 3.14159"]
+"one_outer_pitch_joint_1" -> "one_outer_pitch_back_link"
+"one_outer_pitch_back_link" -> "one_outer_pitch_joint_3" [label="xyz: 0.04178 0.15007 -0.0137 \nrpy: 0 -0 0"]
+"one_outer_pitch_joint_3" -> "one_outer_pitch_bottom_link"
+"one_outer_pitch_bottom_link" -> "one_outer_pitch_joint_5" [label="xyz: -0.52 0 -0.0155 \nrpy: 0 -0 0"]
+"one_outer_pitch_joint_5" -> "one_outer_insertion_link"
+"one_outer_insertion_link" -> "one_outer_insertion_joint" [label="xyz: -0.0403 0.23622 0 \nrpy: 1.5708 -0 0"]
+"one_outer_insertion_joint" -> "one_tool_main_link"
+"one_tool_main_link" -> "one_outer_roll_joint" [label="xyz: 0 0 0.3668 \nrpy: 0 -0 0"]
+"one_outer_roll_joint" -> "one_tool_wrist_link"
+"one_tool_wrist_link" -> "one_outer_roll_shaft_joint" [label="xyz: 0 0 0.0091 \nrpy: 0 -0 0"]
+"one_outer_roll_shaft_joint" -> "one_tool_wrist_shaft_link"
+"one_tool_wrist_shaft_link" -> "one_outer_wrist_pitch_joint" [label="xyz: 0 0 0 \nrpy: 1.57079 -1.57079 3.14159"]
+"one_outer_wrist_pitch_joint" -> "one_tool_wrist_sca_link"
+"one_tool_wrist_sca_link" -> "one_outer_wrist_yaw_joint" [label="xyz: 0.0089 0 0 \nrpy: 1.57079 -1.57079 3.14159"]
+"one_outer_wrist_yaw_joint" -> "one_tool_wrist_sca_shaft_link"
+"one_tool_wrist_sca_shaft_link" -> "one_outer_wrist_open_angle_joint_1" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"one_outer_wrist_open_angle_joint_1" -> "one_tool_wrist_sca_ee_link_1"
+"one_tool_wrist_sca_shaft_link" -> "one_outer_wrist_open_angle_joint_2" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"one_outer_wrist_open_angle_joint_2" -> "one_tool_wrist_sca_ee_link_2"
+"one_outer_pitch_back_link" -> "one_outer_pitch_joint_4" [label="xyz: 0.04209 0.18695 -0.02412 \nrpy: 0 -0 0"]
+"one_outer_pitch_joint_4" -> "one_outer_pitch_top_link"
+"one_outer_yaw_link" -> "one_outer_pitch_joint_2" [label="xyz: 0 0.0295 0.0595 \nrpy: 1.57079 -1.57079 3.14159"]
+"one_outer_pitch_joint_2" -> "one_outer_pitch_front_link"
+}

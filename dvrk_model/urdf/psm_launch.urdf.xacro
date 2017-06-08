@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<robot name="dvrk_psm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Macros -->
+  <xacro:include filename="$(find dvrk_model)/urdf/psm_inertia.urdf.xacro"/>
+
+  <link name="world"/>
+  <xacro:psm 
+      prefix="one_"
+      parent_link="world"
+      xyz="-1 0.0 1" rpy="0.0 0.0 3.1415926"/>
+  
+</robot>
